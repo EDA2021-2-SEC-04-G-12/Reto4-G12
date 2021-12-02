@@ -269,6 +269,8 @@ def newAirport(ID,aiportInfo) :
 def totalAirports(routes) : 
     return gr.numVertices(routes)
 
+def mapSize(map):
+    return mp.size(map)
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento

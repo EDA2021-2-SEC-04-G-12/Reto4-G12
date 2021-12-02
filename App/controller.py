@@ -58,7 +58,7 @@ def loadServices(analyzer):
         model.addAirportbyLongitude(analyzer,airport)
         if i == 1:
             airport_inicial = airport 
-        elif i == len(input_file2):
+        elif i == len(airport):
             airport_final = airport
         i += 1
         
@@ -71,7 +71,8 @@ def loadServices(analyzer):
     
     airports_1 = model.totalAirports(analyzer['routes'])
     airports_2 = model.totalAirports(analyzer['routes_2'])
-    return analyzer,airports_1,airports_2, airport_inicial, airport_final
+    cities = model.mapSize(analyzer['Cities'])
+    return analyzer,airports_1,airports_2,cities,airport_inicial, airport_final
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo

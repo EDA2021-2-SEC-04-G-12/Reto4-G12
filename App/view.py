@@ -26,6 +26,7 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 
+sys.setrecursionlimit(1000000000)
 
 """
 La vista se encarga de la interacción con el usuario
@@ -43,6 +44,7 @@ def printMenu():
     print("5- Encontrar la ruta más corta entre ciudades")
     print("6- Utilizar las millas de viajero")
     print("7- Cuantificar el efecto de un aeropuerto cerrado")
+    print("8- Salir del programa")
 
 
 catalog = None
@@ -52,7 +54,7 @@ Menu principal
 """
 while True:
     printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
+    inputs = input('Seleccione una opción para continuar:\n')
     if int(inputs[0]) == 1:
         print("\nInicializando....")
         analyzer = controller.init()
@@ -60,13 +62,17 @@ while True:
     elif int(inputs[0]) == 2:
         print("Cargando datos .... ")
         services = controller.loadServices(analyzer)
-        Num_1 = services[1]
-        Num_2 = services[2]
-        print(f'Total de aeropuertos = {Num_1}')
-        print(f'Total de rutas aéreas = {Num_2}')
+        num_1 = services[1]
+        num_2 = services[2]
+        cities = services[3]
+        airport_inicial = services[4]
+        airport_final = services[5]
+        print(f'Total de aeropuertos = {num_1}')
+        print(f'Total de rutas aéreas = {num_2}')
+        print(f'Total de ciudades = {cities} ')
+        print('El primer aeropuerto fue: ' + str(airport_inicial))
+        print('El último aeropuerto fue: ' + str(airport_final))
 
-
-        
 
     elif int(inputs[0]) == 3:
         pass

@@ -25,8 +25,9 @@
  """
 
 
+from DISClib.DataStructures.edge import weight
 import config as cf
-from DISClib.ADT.graph import containsVertex, gr
+from DISClib.ADT.graph import adjacents, containsVertex, gr
 from DISClib.ADT import map as m
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
@@ -116,8 +117,7 @@ def addRoute(analyzer,route):
             addAirport(analyzer,route['Departure'])
         if not containsAirport_2: 
             addAirport(analyzer,route['Destination'])
-        addConnection(analyzer,route['Departure'],route['Destination'],distance)
-        
+        addConnection(analyzer,route['Departure'],route['Destination'],distance)    
         return analyzer
     except Exception as exp:
         error.reraise(exp, 'model:addStopConnection')
@@ -160,6 +160,39 @@ def newDataEntry(airport) :
 def addLongitudeIndex(dataEntry,Airport) : 
     lst = dataEntry['lstAirports']
     lt.addLast(lst,Airport)
+
+def addRoute_3(analyzer): 
+    routes = analyzer['airportRoutes']
+    routeGraph = analyzer['routes']
+    nonDirGraph = analyzer['routes_2']
+    vertices = gr.vertices(routeGraph)
+    lista_edges = []
+    for i in lt.iterator(vertices) : 
+        adyacentes = gr.adjacents(routeGraph,i)
+        for j in lt.iterator(adyacentes) : 
+            containsEdge_1 = gr.getEdge(routeGraph,i,j)
+            containsEdge_2 = gr.getEdge(routeGraph,j,i)
+            if containsEdge_1 != None and containsEdge_2 != None :
+                weight = containsEdge_1['weight'] 
+                containsAirport_1 = gr.containsVertex(nonDirGraph,i)
+                containsAirport_2 = gr.containsVertex(nonDirGraph,j)
+                if not containsAirport_1 : 
+                    gr.insertVertex(nonDirGraph,i)
+                if not containsAirport_2 : 
+                    gr.insertVertex(nonDirGraph,j)
+                edge = gr.getEdge(nonDirGraph,i,j)
+                if edge is None : 
+                    gr.addEdge(nonDirGraph,i,j,weight)
+                    lista_edges.append(i+'-'+j)
+
+    return analyzer,lista_edges
+        
+                    
+
+                 
+                
+
+
     
 def addRoute_2(analyzer):
     try:
@@ -185,9 +218,11 @@ def addRoute_2(analyzer):
                                 if not containsAirport_2 :
                                     addAirport_2(analyzer,destination)    
                                 addConnection_2(analyzer,vertice,destination,costo)
+        
+        numVertices = gr.numVertices(analyzer['routes_2'])
+        numArcos = gr.numEdges(analyzer['routes_2'])
 
-
-        return analyzer
+        return analyzer,numVertices,numArcos
     except Exception as exp:
         error.reraise(exp, 'model:addStopConnection')
     
@@ -247,8 +282,7 @@ def addConnection(analyzer, origin, destination, distance):
     Adiciona un arco entre dos estaciones
     """
     edge = gr.getEdge(analyzer['routes'], origin, destination)
-    if edge is None:
-        gr.addEdge(analyzer['routes'], origin, destination, distance)
+    gr.addEdge(analyzer['routes'], origin, destination, distance)
     return analyzer
 
 def addConnection_2(analyzer, origin, destination, distance):

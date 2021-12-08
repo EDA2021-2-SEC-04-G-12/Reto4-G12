@@ -40,39 +40,39 @@ def init():
 # Funciones para la carga de datos
 
 def loadServices(analyzer):
-    routesfile = cf.data_dir + "routes_full.csv"
+    routesfile = cf.data_dir + "routes-utf8-small.csv"
     input_file1 = csv.DictReader(open(routesfile, encoding="utf-8"),
                                 delimiter=",")
     lastroute = None
-    airportsfile = cf.data_dir +  "airports_full.csv"
+    airportsfile = cf.data_dir +  "airports-utf8-small.csv"
     input_file2 = csv.DictReader(open(airportsfile, encoding="utf-8"),
                                 delimiter=",")
-    citiesfile = cf.data_dir + "worldcities.csv"
+    citiesfile = cf.data_dir + "worldcities-utf8.csv"
     input_file3 = csv.DictReader(open(citiesfile, encoding="utf-8"),
                                 delimiter=",")
-    i = 1
+    i = 0
     airport_inicial = None
     airport_final = None
     for airport in input_file2 : 
         model.addAirportbyCode(analyzer,airport)
         model.addAirportbyLongitude(analyzer,airport)
-        if i == 1:
+        if i == 0:
             airport_inicial = airport 
-        elif i == len(airport):
-            airport_final = airport
-        i += 1
-        
+        airport_final = airport
+    j = 0 
     for route in input_file1:
         model.addRoute(analyzer,route)
-#        model.addCity_2(analyzer,route)
-    model.addRoute_2(analyzer)
+        j += 1 
+    #routes_2 = model.addRoute_2(analyzer)
+    routes_3 = model.addRoute_3(analyzer)
     for city in input_file3 : 
         model.addCity(analyzer,city)
     
     airports_1 = model.totalAirports(analyzer['routes'])
     airports_2 = model.totalAirports(analyzer['routes_2'])
     cities = model.mapSize(analyzer['Cities'])
-    return analyzer,airports_1,airports_2,cities,airport_inicial, airport_final
+    
+    return analyzer,airports_1,airports_2,cities,airport_inicial, airport_final,routes_2
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo

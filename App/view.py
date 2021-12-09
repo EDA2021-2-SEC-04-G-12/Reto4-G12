@@ -106,8 +106,24 @@ while True:
         services = controller.loadServices(analyzer)
         Num_1 = services[1]
         Num_2 = services[2]
+        Num_3 = services[3]
+        Num_4 = services[4]
+        Num_5 = services[5]
+        Num_6 = services[6]
+        Num_7 = services[7]
+        print('---------------------------------------------------------------------')
+        print('Grafo 1')
         print(f'Total de aeropuertos = {Num_1}')
         print(f'Total de rutas aéreas = {Num_2}')
+        print(Num_6)
+        print(Num_7)
+        print('---------------------------------------------------------------------')
+        print('Grafo 2')
+        print(f'Total de aeropuertos = {Num_3}')
+        print(f'Total de rutas aéreas = {Num_4}')
+        print('---------------------------------------------------------------------')
+        print('Ciudades')
+        print(f'Total de ciudades = {Num_5}')
 
     elif int(inputs[0]) == 3:
         print("Calculando ... ")
@@ -154,8 +170,8 @@ while True:
         mst = controller.mst(analyzer['routes'])
         distanciaMillas = controller.distancia(analyzer['routes'],mst)
         distanciaKm = (distanciaMillas*1.60)
-        faltanExcedenMillas = float(distanciaMillas) - float(millas)
-        faltanExcedenKm = (distanciaKm - (float(millas)*1.60))
+        faltanExcedenMillas = float(millas) - float(distanciaMillas)
+        faltanExcedenKm = ((float(millas)*1.60) - distanciaKm)
         print("La cantidad de nodos de la red de expansion minima es: " ,str(mp.size(mst['mst'])))
         print("La distancia total de la red de expansion minima es de: ",distanciaKm,"km")
         print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16 + "+")

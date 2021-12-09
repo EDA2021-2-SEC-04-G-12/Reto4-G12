@@ -73,10 +73,12 @@ def loadServices(analyzer):
         model.addCity(analyzer,city)
     
     airports_1 = model.totalAirports(analyzer['routes'])
+    routes_1 = model.totalRoutes(analyzer['routes'])
     airports_2 = model.totalAirports(analyzer['routes_2'])
+    routes_2 = model.totalRoutes(analyzer['routes_2'])
     cities = model.mapSize(analyzer['Cities'])
     
-    return analyzer,airports_1,airports_2,cities,airport_inicial, airport_final
+    return analyzer,airports_1,routes_1,airports_2,routes_2,cities,airport_inicial, airport_final
 
 # Funciones de ordenamiento
 

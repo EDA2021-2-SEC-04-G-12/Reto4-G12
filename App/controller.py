@@ -60,7 +60,8 @@ def loadServices(analyzer):
         model.addAirporttoGraph(analyzer,airport)
         if i == 0:
             airport_inicial = airport 
-        airport_final = airport
+        if i == len(input_file2):
+            airport_final = airport
     j = 0 
     print('Cargando rutas ...')
     for route in input_file1:

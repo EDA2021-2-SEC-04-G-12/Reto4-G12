@@ -149,7 +149,7 @@ while True:
         print("La cantidad de nodos de la red de expansion minima es: " ,str(mp.size(mst['mst'])))
         print("La distancia total de la red de expansion minima es de: ",distanciaKm,"km")
         print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16)
-        print("|" + " Departure" + " "*4 + "|" + " Destination" + " "*4 + "|" + " Distance" + " "*6 + "|")
+        print("|" + " Departure" + " "*4 + "|" + " Destination" + " "*2 + "|" + " Distance" + " "*6 + "|")
         print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16)
         i = 0
         while i < lt.size(mst["mst"]): 

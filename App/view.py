@@ -138,7 +138,7 @@ while True:
         mst = controller.mst(analyzer['routes'])
         distanciaMillas = controller.distancia(analyzer['routes'],mst)
         distanciaKm = (distanciaMillas*1.6)
-        faltanExcedenMillas = distanciaMillas - millas
+        faltanExcedenMillas = float(distanciaMillas) - float(millas)
         faltanExcedenKm = (distanciaKm - (millas*1,6))
         print("La cantidad de nodos de la red de expansion minima es: " ,mp.size(mst['marked']))
         print("La distancia total de la red de expansion minima es de: ",distanciaKm,"km")

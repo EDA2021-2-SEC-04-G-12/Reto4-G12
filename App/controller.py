@@ -106,3 +106,9 @@ def mst(grafo):
 
 def distancia(grafo,mst):
     return model.distancia(grafo,mst)
+
+def nearAirports(analyzer,codeIATA):
+    return model.nearAirports(analyzer,codeIATA)
+
+def afected(analyzer,listAirports):
+    return model.afected(analyzer,listAirports)

@@ -35,6 +35,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import mergesort as mer
 from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra as djk
+from DISClib.Algorithms.Graphs import prim
 from DISClib.Utils import error as error
 
 assert cf

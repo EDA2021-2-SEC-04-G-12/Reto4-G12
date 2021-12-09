@@ -134,7 +134,22 @@ while True:
         ruta = controller.findShortestRoute(analyzer,ciudad_1,ciudad_2)
     elif int(inputs[0]) == 6:
         millas = input("Ingrese la cantidad de millas disponibles del viajero: ")
-        
+        mst = controller.mst(analyzer['routes'])
+        distanciaMillas = controller.distancia(analyzer['routes'],mst)
+        distanciaKm = (distanciaMillas*1.6)
+        faltanExcedenMillas = distanciaMillas - millas
+        faltanExcedenKm = (distanciaKm - (millas*1,6))
+        print("La cantidad de nodos de la red de expansion minima es: " ,mp.size(mst['marked']))
+        print("La distancia total de la red de expansion minima es de: ",distanciaKm,"km")
+        if faltanExcedenMillas < 0:
+            print("Al viajero le faltan: " + str(faltanExcedenMillas) + "millas.")
+            print("Al viajero le faltan: " + str(faltanExcedenMillas) + "Km.")
+        elif faltanExcedenMillas > 0:
+            print("Al viajero le sobran: " + str(faltanExcedenMillas) + "millas.")
+            print("Al viajero le sobran: " + str(faltanExcedenMillas) + "Km.")
+        else: 
+            print("El viajero usó todas sus millas.")
+            print("El viajero usó todas sus Km.")
     elif int(inputs[0]) == 7:
         pass
     else:

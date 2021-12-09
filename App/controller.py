@@ -53,6 +53,7 @@ def loadServices(analyzer):
     i = 0
     airport_inicial = None
     airport_final = None
+    print("cargando aeropuertos ...")
     for airport in input_file2 : 
         model.addAirportbyCode(analyzer,airport)
         model.addAirportbyLongitude(analyzer,airport)
@@ -61,11 +62,13 @@ def loadServices(analyzer):
             airport_inicial = airport 
         airport_final = airport
     j = 0 
+    print('cargando rutas ...')
     for route in input_file1:
         model.addRoute(analyzer,route)
         j += 1 
     #routes_2 = model.addRoute_2(analyzer)
     routes_3 = model.addRoute_3(analyzer)
+    print('cargando ciudades ...')
     for city in input_file3 : 
         model.addCity(analyzer,city)
     
@@ -96,6 +99,7 @@ def findClusters(analyzer,airport1,airport2):
 
 def findShortestRoute(analyzer,ciudad_1,ciudad_2) : 
     esoSi = model.findShortestRoute(analyzer,ciudad_1,ciudad_2)
+    return esoSi
 
 def mst(grafo):
     return model.mst(grafo)

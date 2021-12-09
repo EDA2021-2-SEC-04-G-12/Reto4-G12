@@ -63,6 +63,9 @@ def printAirportInfo (airportinfo):
     print(f"| {Name:31}| {City:18}| {Country:22}| {IATA:7}| {conections:14}| {inbound:11}| {outbound:11}|")
     print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+" + "-"*12 + '+' + '-'*12 + '+')
 
+def printRoute (paso): #TODO:PRINT REQ 3
+    pass
+
 def displayCities(city) : 
     citymap = controller.cityMap(analyzer,city)
     print('Se hallaron varias ciudades con el mismo nombre, por favor elija una: ')
@@ -135,8 +138,10 @@ while True:
         ciudad_2 = input('Ingrese el nombre de la ciudad de llegada: ')
         ciudad_pais2 = displayCities(ciudad_2)
         aeropuerto1 = controller.findNearestAirport(analyzer,ciudad_pais1)
-        aeropuerto1 = controller.findNearestAirport(analyzer,ciudad_pais2)
-        ruta = controller.findShortestRoute(analyzer,ciudad_1,ciudad_2)
+        aeropuerto2 = controller.findNearestAirport(analyzer,ciudad_pais2)
+        route = controller.findShortestRoute(analyzer,aeropuerto1['IATA'],aeropuerto2['IATA'])
+        for paso in lt.iterator(route) : 
+            printRoute(paso)
 
     elif int(inputs[0]) == 6:
         millas = input("Ingrese la cantidad de millas disponibles del viajero: ")

@@ -55,8 +55,8 @@ def printCityInfo (cityinfo):
     lat = cityinfo['lat']
     lng = cityinfo['lng']
     population = cityinfo['population'] 
-    print(f"| {city:31}| {country:18}| {lat:22}| {lng:7}| {population:14}|")
-    print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+")
+    print(f"| {city:9}| {country:9}| {lat:9}| {lng:9}| {population:9}|")
+    print("+" + "-"*10 +"+" + "-"*10 + "+" + "-"*10 + "+" + '-'*10 + '+' + "-"*10 + "+")
 def printAirportInfo (airportinfo):
     """
     Impresion de datos requerimiento 1
@@ -134,11 +134,11 @@ while True:
         print('------------------------------------------------------------------------------------------------------------------------------------------')
         print('Ciudades')
         print(f'Total de ciudades = {Num_5}')
-        print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+")
-        print("|" + 'Ciudad' + ' '*27 + "|" + 'País' + ' '*14 + "|" + 'Latitud' + ' '*15 + "|" + 'Longitud'+" "*3 +"|"+"Población" +' ' +"|")
-        print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+")
-        print(Num_8)
-        print(Num_9)
+        print("+" + "-"*10 +"+" + "-"*10 + "+" + "-"*10 + "+" + '-'*10 + '+' + "-"*10 + "+")
+        print("|" + 'Ciudad' + ' '*4 + "|" + 'País' + ' '*4 + "|" + 'Latitud' + ' '*4 + "|" + 'Longitud'+" "*4 +"|"+"Población" +' '*4 +"|")
+        print("+" + "-"*10 +"+" + "-"*10 + "+" + "-"*10 + "+" + '-'*10 + '+' + "-"*10 + "+")
+        printCityInfo(Num_8)
+        printCityInfo(Num_9)
 
     elif int(inputs[0]) == 3:
         print("Calculando ... ")

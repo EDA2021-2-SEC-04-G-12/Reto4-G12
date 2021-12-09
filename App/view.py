@@ -153,7 +153,7 @@ while True:
         while i < lt.size(mst["mst"]): 
             elem = lt.getElement(mst["mst"],i)
             printArbolExpansion(elem)
-            i -= 1
+            i += 1
         if faltanExcedenMillas < 0:
             print("Al viajero le faltan: " + str(faltanExcedenMillas) + " millas.")
             print("Al viajero le faltan: " + str(faltanExcedenKm) + " Km.")

@@ -64,7 +64,11 @@ def printAirportInfo (airportinfo):
     print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+" + "-"*12 + '+' + '-'*12 + '+')
 
 def printRoute (paso): #TODO:PRINT REQ 3
-    pass
+    departure = paso['vertexA']
+    destination = paso['vertexB']
+    distance = paso['weight']
+    print(f"| {departure:13}| {destination:13}| {distance:15}|")
+    print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16 + "+")
 
 def displayCities(city) : 
     citymap = controller.cityMap(analyzer,city)
@@ -141,6 +145,8 @@ while True:
         aeropuerto2 = controller.findNearestAirport(analyzer,ciudad_pais2)
         route = controller.findShortestRoute(analyzer,aeropuerto1['IATA'],aeropuerto2['IATA'])
         for paso in lt.iterator(route) : 
+            print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16 + "+")
+            print("|" + " Departure" + " "*4 + "|" + " Destination" + " "*2 + "|" + " Distance" + " "*7 + "|")
             printRoute(paso)
 
     elif int(inputs[0]) == 6:

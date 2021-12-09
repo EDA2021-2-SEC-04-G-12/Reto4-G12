@@ -56,8 +56,8 @@ def printInfoAirport (airportInfo):
     country = airportInfo['Country']
     lat = airportInfo['Latitude'] 
     lng = airportInfo['Longitude']
-    print(f"| {codeIATA:7}| {name:31}| {city:18}| {country:22}| {lat:11}| {lng:11}|")
-    print("+" + '-'*8 + "+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
+    print(f"| {codeIATA:7}| {name:41}| {city:18}| {country:22}| {lat:11}| {lng:11}|")
+    print("+" + '-'*8 + "+" + "-"*42 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
 def printCityInfo (cityinfo):
     city = cityinfo['city']
     country = cityinfo['country']
@@ -135,9 +135,9 @@ while True:
         print(f'Total de aeropuertos = {Num_1}')
         print(f'Total de rutas aéreas = {Num_2}')
         print("El primer y último aeropuerto cargado son: ")
-        print("+" + '-'*8 + "+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
-        print("| " + 'IATA' + "| " + 'Nombre' + "| " + 'Ciudad' + ' '*3 + "| " + 'País' + ' '*5 + "| " + 'Latitud' + ' '*2 + "| " + 'Longitud'+ " " +"|"+"Población" +' ' +"|")
-        print("+" + '-'*8 + "+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
+        print("+" + '-'*8 + "+" + "-"*42 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
+        print("| " + 'IATA' + ' '*4 + "| " + 'Nombre' + ' '*20 + "| " + 'Ciudad' + ' '*3 + "| " + 'País' + ' '*5 + "| " + 'Latitud' + ' '*2 + "| " + 'Longitud'+ " " +"|"+"Población" +' ' +"|")
+        print("+" + '-'*8 + "+" + "-"*42 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
         printInfoAirport(Num_6)
         printInfoAirport(Num_7)
         print('------------------------------------------------------------------------------------------------------------------------------------------')
@@ -145,9 +145,9 @@ while True:
         print(f'Total de aeropuertos = {Num_3}')
         print(f'Total de rutas aéreas = {Num_4}')
         print("El primer y último aeropuerto cargado son: ")
-        print("+" + '-'*8 + "+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
-        print("| " + 'IATA' + "| " + 'Nombre' + "| " + 'Ciudad' + ' '*3 + "| " + 'País' + ' '*5 + "| " + 'Latitud' + ' '*2 + "| " + 'Longitud'+ " " +"|"+"Población" +' ' +"|")
-        print("+" + '-'*8 + "+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
+        print("+" + '-'*8 + "+" + "-"*42 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
+        print("| " + 'IATA' + ' '*4 + "| " + 'Nombre' + ' '*20 + "| " + 'Ciudad' + ' '*3 + "| " + 'País' + ' '*5 + "| " + 'Latitud' + ' '*2 + "| " + 'Longitud'+ " " +"|"+"Población" +' ' +"|")
+        print("+" + '-'*8 + "+" + "-"*42 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
         printInfoAirport(Num_6)
         printInfoAirport(Num_7)
         print('------------------------------------------------------------------------------------------------------------------------------------------')

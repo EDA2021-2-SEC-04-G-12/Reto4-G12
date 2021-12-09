@@ -501,4 +501,10 @@ def compareLatitude(elem1,elem2) :
 def findShortestRoute(analyzer,ciudad_1,ciudad_2): 
     pass
 
+# REQUERIMIENTO 4
 
+def mst(grafo):
+    return prim.PrimMST(grafo)
+
+def distancia(grafo,mst):
+    return prim.weightMST(grafo,mst)

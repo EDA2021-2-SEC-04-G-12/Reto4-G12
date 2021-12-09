@@ -167,8 +167,8 @@ while True:
 
     elif int(inputs[0]) == 6:
         millas = input("Ingrese la cantidad de millas disponibles del viajero: ")
-        mst = controller.mst(analyzer['routes'])
-        distanciaMillas = controller.distancia(analyzer['routes'],mst)
+        mst = controller.mst(analyzer['routes_2'])
+        distanciaMillas = controller.distancia(analyzer['routes_2'],mst)
         distanciaKm = (distanciaMillas*1.60)
         faltanExcedenMillas = float(millas) - float(distanciaMillas)
         faltanExcedenKm = ((float(millas)*1.60) - distanciaKm)

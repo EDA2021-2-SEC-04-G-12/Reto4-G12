@@ -35,6 +35,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import mergesort as mer
 from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra as djk
+from DISClib.Algorithms.Graphs import prim
 from DISClib.Utils import error as error
 
 assert cf
@@ -530,4 +531,10 @@ def findShortestRoute(analyzer,airport_1,airport_2):
 
     
 
+# REQUERIMIENTO 4
 
+def mst(grafo):
+    return prim.PrimMST(grafo)
+
+def distancia(grafo,mst):
+    return prim.weightMST(grafo,mst)

@@ -24,6 +24,7 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from DISClib.ADT import map as mp
 assert cf
 
 
@@ -38,11 +39,12 @@ def printMenu():
     print("Bienvenido")
     print("1- Iniciar Analizador")
     print("2- Cargar información de los aeropuertos y rutas")
-    print("3- Encontrar puntos de interconexión aérea")
-    print("4- Encontrar clústeres de tráfico aéreo")
-    print("5- Encontrar la ruta más corta entre ciudades")
-    print("6- Utilizar las millas de viajero")
-    print("7- Cuantificar el efecto de un aeropuerto cerrado")
+    print("3- Requerimiento 1: Encontrar puntos de interconexión aérea")
+    print("4- Requerimiento 2: Encontrar clústeres de tráfico aéreo")
+    print("5- Requerimiento 3: Encontrar la ruta más corta entre ciudades")
+    print("6- Requerimiento 4: Utilizar las millas de viajero")
+    print("7- Requerimiento 5: Cuantificar el efecto de un aeropuerto cerrado")
+    print("8- Salir del programa")
 
 
 catalog = None
@@ -75,6 +77,12 @@ def displayCities(city) :
     elemento = lt.getElement(citymap,int(seleccion))
     return elemento
     
+def printArbolExpansion(mst):
+    departure = mst['vertexA']
+    destination = mst['vertexB']
+    distance = mst['weight']
+    print(f"| {departure:13}| {destination:13}| {distance:15}|")
+    print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16 + "+")
 
 
     
@@ -122,7 +130,8 @@ while True:
         if clusters[0] : 
             print(f"Los aeropuertos {airport1} y {airport2} estan en un mismo cluster")
         else : 
-            print("Los aeropuertos no estan conectados")        
+            print("Los aeropuertos no estan conectados")      
+
     elif int(inputs[0]) == 5:
         ciudad_1  = input("Ingrese el nombre de la ciudad de partida: ")
         ciudad_pais1 = displayCities(ciudad_1) 
@@ -135,9 +144,35 @@ while True:
             printRoute(paso)
 
     elif int(inputs[0]) == 6:
-        pass
+        millas = input("Ingrese la cantidad de millas disponibles del viajero: ")
+        mst = controller.mst(analyzer['routes'])
+        distanciaMillas = controller.distancia(analyzer['routes'],mst)
+        distanciaKm = (distanciaMillas*1.60)
+        faltanExcedenMillas = float(distanciaMillas) - float(millas)
+        faltanExcedenKm = (distanciaKm - (float(millas)*1.60))
+        print("La cantidad de nodos de la red de expansion minima es: " ,str(mp.size(mst['mst'])))
+        print("La distancia total de la red de expansion minima es de: ",distanciaKm,"km")
+        print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16 + "+")
+        print("|" + " Departure" + " "*4 + "|" + " Destination" + " "*2 + "|" + " Distance" + " "*7 + "|")
+        print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16 + "+")
+        i = 0
+        while i < lt.size(mst["mst"]): 
+            elem = lt.getElement(mst["mst"],i)
+            printArbolExpansion(elem)
+            i += 1
+        if faltanExcedenMillas < 0:
+            print("Al viajero le faltan: " + str(faltanExcedenMillas) + " millas.")
+            print("Al viajero le faltan: " + str(faltanExcedenKm) + " Km.")
+        elif faltanExcedenMillas > 0:
+            print("Al viajero le sobran: " + str(faltanExcedenMillas) + " millas.")
+            print("Al viajero le sobran: " + str(faltanExcedenKm) + " Km.")
+        else: 
+            print("El viajero usó todas sus millas.")
+            print("El viajero usó todas sus Km.")
+
     elif int(inputs[0]) == 7:
         pass
+    
     else:
         sys.exit(0)
 sys.exit(0)

@@ -560,8 +560,8 @@ def distancia(grafo,mst):
 
 # REQUERIMIENTO 5
 
-def nearAirports(analyzer,codeIATA):
-    airportsMap = analyzer['near_IATA']
+def findCity(analyzer,codeIATA):
+    airportsMap = analyzer['Cities']
     couple = mp.get(airportsMap,codeIATA)
     return me.getValue(couple)
 

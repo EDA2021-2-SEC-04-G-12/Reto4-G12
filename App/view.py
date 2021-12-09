@@ -178,7 +178,8 @@ while True:
 
     elif int(inputs[0]) == 7:
         codigoIATA=input("Ingrese el código IATA del aeropuerto fuera de funcionamiento: ")
-        listAirports = controller.nearAirports(analyzer,codigoIATA)
+        city = controller.findCity(analyzer,codigoIATA)
+        listAirports = controller.findNearestAirport(analyzer,city)
         afected = controller.afected(analyzer,listAirports)
         print("La cantidad de paises afectados es: ",lt.size(afected))
         print("La lista de paises afectados es la siguiente: ")

@@ -112,3 +112,6 @@ def nearAirports(analyzer,codeIATA):
 
 def afected(analyzer,listAirports):
     return model.afected(analyzer,listAirports)
+
+def findCity(analyzer,codeIATA):
+    return model.findCity(analyzer,codeIATA)

@@ -23,20 +23,20 @@
  *
  * Dario Correal - Version inicial
  """
-
-
+from math import atan2, radians, cos, sin, asin, sqrt
 from DISClib.DataStructures.edge import weight
 import config as cf
-from DISClib.ADT.graph import adjacents, containsVertex, gr
+from DISClib.ADT.graph import adjacents, containsVertex, gr, vertices
 from DISClib.ADT import map as m
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.ADT import orderedmap as om 
 from DISClib.DataStructures import mapentry as me
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import mergesort as mer
 from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra as djk
 from DISClib.Utils import error as error
+
 assert cf
 
 
@@ -72,13 +72,9 @@ def newAnalyzer():
                                               size=14000,
                                               comparefunction=compareRoutes)
         
-        analyzer['Cities'] = m.newMap(numelements=10000,
+        analyzer['city-country'] = m.newMap(numelements=10000,
                                     maptype='PROBING',
                                     comparefunction=compareAirports)
-        analyzer['city'] = gr.newGraph(datastructure='ADJ_LIST',
-                                              directed=False,
-                                              size=14000,
-                                              comparefunction=compareRoutes)
         
         return analyzer
     except Exception as exp:
@@ -90,12 +86,50 @@ def addAirportbyCode(analyzer,airport) :
     code = airport['IATA']
     mp.put(codes,code,airport)
 
+
+
 def addCity(analyzer,city):
     cities = analyzer['Cities']
-    cityID = city['city_ascii'] + city['country']
-    mp.put(cities,cityID,city)
+    cityName = city['city']
+    cityCountry = city['city'] + '-' + city['country']
+    mp.put(analyzer['city-country'],cityCountry,city)
+    existedCity = mp.contains(cities,cityName)
+    if existedCity :
+        entry = mp.get(cities,cityName)
+        cityList = me.getValue(entry)
+    else : 
+        cityList = newCityList(cityName)
+        mp.put(cities,cityName,cityList)
+    addCitytoMap(cityList['cityList'],city)
+
+def addCitytoMap(cityList,city) : 
+    name = city['city'] + '-' + city['country']
+    mp.put(cityList,name,city)
+
+def newCityList(cityName) : 
+    cityList = {'cityName':None,'cityList':''}
+    cityList['cityName'] = cityName
+    cityList['cityList'] = mp.newMap(numelements=100,
+                                    maptype='PROBING',
+                                    comparefunction=compareAirports)
+    return cityList
+
+def addAirporttoGraph(analyzer,airport) : 
+    IATA = airport['IATA']
+    graph = analyzer['routes']
+    containsAirport_1 = gr.containsVertex(graph,IATA)
+    if not containsAirport_1 : 
+        gr.insertVertex(graph,IATA)
+    return analyzer 
+    
+    
 
 def addRoute(analyzer,route):
+    """
+    aniade los vertices y sus conexiones a un grafo dirigido, ademas aniade los aeropuertos 
+    a una tabla de hash que tiene como llave el aeropuerto y como valor sus destinos.
+
+    """
 
     try: 
         airportRoutes = analyzer['airportRoutes']
@@ -345,3 +379,126 @@ def compareLongitudes(longitude1, longitude2):
         return -1
 def compareAirports_2(airp1,airp2):
     return airp1 < airp2
+
+#REQUERIMIENTO 1 
+
+def newVertice(analyzer,verticeID,inbound,outbound): 
+    vertice = {"IATA":'',"info":'',"numConexions":None}
+    entry = mp.get(analyzer['airports'],verticeID)
+    info = me.getValue(entry)
+    vertice['IATA'] = verticeID
+    vertice['info'] = info
+    vertice['inbound'] = inbound
+    vertice['outbound'] = outbound
+    vertice['numConexions'] = inbound + outbound
+    return vertice 
+    
+def masConectados(analyzer) : 
+    diGraph = analyzer['routes']
+    vertices = gr.vertices(diGraph) 
+    returnList = lt.newList('ARRAY_LIST',compareAirportCon)
+    for vertice in lt.iterator(vertices) : 
+        inbound = gr.indegree(diGraph,vertice)
+        outbound = gr.outdegree(diGraph,vertice)
+        vertice = newVertice(analyzer,vertice,inbound,outbound)
+        lt.addLast(returnList,vertice)
+    mer.sort(returnList,compareAirportCon)
+    return returnList 
+
+
+
+
+def compareAirportCon (airport_1,airport_2):
+    numCon_1 = airport_1['numConexions']
+    numCon_2 = airport_2['numConexions']
+    return numCon_1 < numCon_2
+
+#REQUERIMIENTO 2 
+
+def findClusters(analyzer,airport1,airport2):
+    containsAirport1 = gr.containsVertex(analyzer['routes'],airport1)
+    containsAirport2 = gr.containsVertex(analyzer['routes'],airport2)
+    estructura = scc.KosarajuSCC(analyzer['routes']) 
+    connectedComponents = scc.connectedComponents(estructura)
+    if containsAirport1 and containsAirport2 : 
+        conectados = scc.stronglyConnected(estructura,airport1,airport2)
+    else : 
+        conectados = False 
+
+    return conectados, connectedComponents
+     
+
+
+#REQUERIMIENTO 3 
+def cityMap(analyzer,city) :
+    cities = analyzer['Cities'] 
+    entry = mp.get(cities,city)
+    values = me.getValue(entry)
+    cities = mp.keySet(values['cityList'])
+    return cities 
+
+
+def haversine(lat1, lon1, lat2, lon2):
+    R = 6372.8 # this is in miles.  For Earth radius in kilometers use 6372.8 km
+
+    dLat = radians(lat2 - lat1)
+    dLon = radians(lon2 - lon1)
+    lat1 = radians(lat1)
+    lat2 = radians(lat2)
+
+    a = sin(dLat/2)**2 + cos(lat1)*cos(lat2)*sin(dLon/2)**2
+    c = 2*asin(sqrt(a))
+    return R * c
+
+def latLongRange(latitude,longitude,range):
+    angular_distance = range/6372.8
+
+    lat_min = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(180))
+    lat_max = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(0))
+    lat_izq = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(270))
+    long_min = longitude + atan2(sin(270)*sin(angular_distance)*cos(latitude),cos(angular_distance)-sin(latitude)*sin(lat_izq))
+    lat_der = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(90))
+    long_max = longitude + atan2(sin(90)*sin(angular_distance)*cos(latitude),cos(angular_distance)-sin(latitude)*sin(lat_der))
+    return (lat_min,lat_max),(long_min,long_max)
+
+
+    
+
+
+def findNearestAirport(analyzer,cityCountry): 
+    entry = mp.get(analyzer['city-country'],cityCountry)
+    info = me.getValue(entry)
+    latitude = info['lat']
+    longitude = info['lng']
+    encontro = False
+    range = 10 
+    latlist = lt.newList('ARRAY_LIST')
+    airport = lt.newList('ARRAY_LIST')
+    while encontro == False :
+        rango = latLongRange(float(latitude),float(longitude),range)
+        listAirportsLat = om.values(analyzer['airportsLongitudes'],rango[1][0],rango[1][1])
+        for lista in lt.iterator(listAirportsLat) : 
+            for element in lt.iterator(lista) :
+                lt.addLast(latlist,element)
+        mer.sort(latlist,compareLatitude)
+        for element in lt.iterator(latlist) :
+             if float(element['lat']) >= rango[0][0] and float(element['lat']) < rango[0][1]:
+                 lt.addLast(airport)
+                 encontro = True
+    return airport
+     
+
+
+
+
+def compareLatitude(elem1,elem2) : 
+    lat1 = elem1['lat']
+    lat2 = elem2['lat']
+    return lat1 < lat2
+
+
+
+def findShortestRoute(analyzer,ciudad_1,ciudad_2): 
+    pass
+
+

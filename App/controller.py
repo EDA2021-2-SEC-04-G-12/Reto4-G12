@@ -56,6 +56,7 @@ def loadServices(analyzer):
     for airport in input_file2 : 
         model.addAirportbyCode(analyzer,airport)
         model.addAirportbyLongitude(analyzer,airport)
+        model.addAirporttoGraph(analyzer,airport)
         if i == 0:
             airport_inicial = airport 
         airport_final = airport
@@ -72,7 +73,26 @@ def loadServices(analyzer):
     airports_2 = model.totalAirports(analyzer['routes_2'])
     cities = model.mapSize(analyzer['Cities'])
     
-    return analyzer,airports_1,airports_2,cities,airport_inicial, airport_final,routes_2
+    return analyzer,airports_1,airports_2,cities,airport_inicial, airport_final
+
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+
+def cityMap(analyzer,city):
+    return model.cityMap(analyzer,city)
+def findNearestAirport(analyzer,ciudad_pais1): 
+    return model.findNearestAirport(analyzer,ciudad_pais1)
+def masConectados(analyzer) :
+    """
+    Retorna al view los aeropuestos mas conectados en la red de rutas
+    """
+    aeropuertos = model.masConectados(analyzer)
+    return aeropuertos
+
+def findClusters(analyzer,airport1,airport2): 
+    clusters = model.findClusters(analyzer,airport1,airport2)
+    return clusters
+
+def findShortestRoute(analyzer,ciudad_1,ciudad_2) : 
+    esoSi = model.findShortestRoute(analyzer,ciudad_1,ciudad_2)

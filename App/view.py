@@ -47,6 +47,35 @@ def printMenu():
 
 catalog = None
 
+def printAirportInfo (airportinfo):
+    """
+    Impresion de datos requerimiento 1
+    """
+    Name = airportinfo['info']['Name']
+    City = airportinfo['info']['City']
+    Country = airportinfo['info']['Country']
+    IATA = airportinfo['info']['IATA']
+    conections = airportinfo['numConexions'] 
+    inbound = airportinfo['inbound']
+    outbound = airportinfo['outbound']
+    print(f"| {Name:31}| {City:18}| {Country:22}| {IATA:7}| {conections:14}| {inbound:11}| {outbound:11}|")
+    print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+" + "-"*12 + '+' + '-'*12 + '+')
+
+def displayCities(city) : 
+    citymap = controller.cityMap(analyzer,city)
+    print('Se hallaron varias ciudades con el mismo nombre, por favor elija una: ')
+    i = 1 
+    for city in lt.iterator(citymap) : 
+        print(f"{i}. {city}")
+        i += 1 
+    seleccion = input("Ingrese una opcion: ")
+    elemento = lt.getElement(citymap,int(seleccion))
+    return elemento
+    
+
+
+    
+    
 """
 Menu principal
 """
@@ -65,15 +94,43 @@ while True:
         print(f'Total de aeropuertos = {Num_1}')
         print(f'Total de rutas aéreas = {Num_2}')
 
-
-        
-
     elif int(inputs[0]) == 3:
-        pass
+        print("Calculando ... ")
+        aeropuertos = controller.masConectados(analyzer)
+        conected = lt.size(aeropuertos)
+        print(f"Numero de aeropuertos conectados: {conected}\n")
+        print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+" + "-"*12 + '+' + '-'*12 + '+')
+        print("| " + 'Name' + ' '*27 + "| " + 'City' + ' '*14 + "| " + 'Country' + ' '*15 + "| " + 'IATA'+" "*3 +"|   "\
+            +"connections" +' ' +"|   " + "inbound" + "  " + "|   outbound" + " "+"|" )
+        print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+" + "-"*12 + '+' + '-'*12 + '+')
+        i = lt.size(aeropuertos) 
+        while i > lt.size(aeropuertos) - 6: 
+            elem = lt.getElement(aeropuertos,i)
+            printAirportInfo(elem)
+            i -= 1
+
     elif int(inputs[0]) == 4:
-        pass
+        airport1 = input("Ingrese el codigo IATA del aeropuerto 1: ")
+        airport2 = input("Ingrese el codigo IATA del aeropuerto 2: ")
+        print("Encontrando componentes fuertemente conectados ...")
+        clusters = controller.findClusters(analyzer,airport1,airport2)
+        numeroClusters = clusters[1]
+        print(f"Se encontraron {numeroClusters} clusters dentro de la red.\n")
+        if clusters[0] : 
+            print(f"Los aeropuertos {airport1} y {airport2} estan en un mismo cluster")
+        else : 
+            print("Los aeropuertos no estan conectados")        
     elif int(inputs[0]) == 5:
-        pass
+        ciudad_1  = input("Ingrese el nombre de la ciudad de partida: ")
+        ciudad_pais1 = displayCities(ciudad_1) 
+        ciudad_2 = input('Ingrese el nombre de la ciudad de llegada: ')
+        ciudad_pais2 = displayCities(ciudad_2)
+        aeropuerto1 = controller.findNearestAirport(analyzer,ciudad_pais1)
+        aeropuerto1 = controller.findNearestAirport(analyzer,ciudad_pais2)
+
+
+
+        ruta = controller.findShortestRoute(analyzer,ciudad_1,ciudad_2)
     elif int(inputs[0]) == 6:
         pass
     elif int(inputs[0]) == 7:

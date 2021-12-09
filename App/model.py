@@ -23,7 +23,7 @@
  *
  * Dario Correal - Version inicial
  """
-from math import atan2, radians, cos, sin, asin, sqrt
+from math import atan2, radians, cos, sin, asin, sqrt, degrees, pi
 from DISClib.DataStructures.edge import weight
 import config as cf
 from DISClib.ADT.graph import adjacents, containsVertex, gr, vertices
@@ -179,11 +179,11 @@ def addAirportbyLongitude(analyzer,airport) : #TODO:terminar arbol RBT de carga 
     longitude = round(float(airport['Longitude']),2)
     entry = om.get(longitudes,longitude)
     if entry is None : 
-        dataEntry = newDataEntry(airport)
+        dataEntry = lt.newList('ARRAY_LIST')
         om.put(longitudes,longitude,dataEntry)
     else : 
         dataEntry = me.getValue(entry)
-        addLongitudeIndex(dataEntry,airport)
+    addLongitudeIndex(dataEntry,airport)
     return  analyzer
     
 def newDataEntry(airport) :
@@ -192,8 +192,7 @@ def newDataEntry(airport) :
     return entry
 
 def addLongitudeIndex(dataEntry,Airport) : 
-    lst = dataEntry['lstAirports']
-    lt.addLast(lst,Airport)
+    lt.addLast(dataEntry,Airport)
 
 def addRoute_3(analyzer): 
     routes = analyzer['airportRoutes']
@@ -450,16 +449,33 @@ def haversine(lat1, lon1, lat2, lon2):
     c = 2*asin(sqrt(a))
     return R * c
 
+def latLongRange_2(latitude,longitude,brng,d):
+    R = 6378.1
+    lat1 = radians(latitude) 
+    lon1 = radians(longitude)
+    lat2 = asin( sin(lat1)*cos(d/R) +
+             cos(lat1)*sin(d/R)*cos(brng))
+    lon2 = lon1 + atan2(sin(brng)*sin(d/R)*cos(lat1),
+                     cos(d/R)-sin(lat1)*sin(lat2))
+    return degrees(lat2),degrees(lon2)
+
+    
+
+
+
+
+
+
 def latLongRange(latitude,longitude,range):
     angular_distance = range/6372.8
 
-    lat_min = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(180))
-    lat_max = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(0))
-    lat_izq = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(270))
-    long_min = longitude + atan2(sin(270)*sin(angular_distance)*cos(latitude),cos(angular_distance)-sin(latitude)*sin(lat_izq))
+    lat_min = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(radians(180)))
+    lat_max = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(radians(0)))
+    lat_izq = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(radians(270)))
+    long_min = longitude + atan2(sin(radians(270))*sin(angular_distance)*cos(latitude),cos(angular_distance)-sin(latitude)*sin(lat_izq))
     lat_der = asin(sin(latitude)*cos(angular_distance) + cos(latitude)*sin(angular_distance)*cos(90))
-    long_max = longitude + atan2(sin(90)*sin(angular_distance)*cos(latitude),cos(angular_distance)-sin(latitude)*sin(lat_der))
-    return (lat_min,lat_max),(long_min,long_max)
+    long_max = longitude + atan2(sin(radians(90))*sin(angular_distance)*cos(latitude),cos(angular_distance)-sin(latitude)*sin(lat_der))
+    return (degrees(lat_min),degrees(lat_max)),(degrees(long_min),degrees(long_max))
 
 
     
@@ -475,30 +491,43 @@ def findNearestAirport(analyzer,cityCountry):
     latlist = lt.newList('ARRAY_LIST')
     airport = lt.newList('ARRAY_LIST')
     while encontro == False :
-        rango = latLongRange(float(latitude),float(longitude),range)
-        listAirportsLat = om.values(analyzer['airportsLongitudes'],rango[1][0],rango[1][1])
-        for lista in lt.iterator(listAirportsLat) : 
-            for element in lt.iterator(lista) :
-                lt.addLast(latlist,element)
-        mer.sort(latlist,compareLatitude)
-        for element in lt.iterator(latlist) :
-             if float(element['lat']) >= rango[0][0] and float(element['lat']) < rango[0][1]:
-                 lt.addLast(airport)
-                 encontro = True
-    return airport
-     
+        lat_min = latLongRange_2(round(float(latitude),2),round(float(longitude),2),180,range)[0]
+        lat_max = latLongRange_2(round(float(latitude),2),round(float(longitude),2),0,range)[0]
+        long_min = latLongRange_2(round(float(latitude),2),round(float(longitude),2),90,range)[1]
+        long_max = latLongRange_2(round(float(latitude),2),round(float(longitude),2),270,range)[1]
+        longTuple = (long_min,long_max)
+        latTuple  = (lat_min,lat_max)
+        listAirportsLat = om.values(analyzer['airportsLongitudes'],min(longTuple),max(longTuple))
+        if lt.size(listAirportsLat) > 0 :
+            for lista in lt.iterator(listAirportsLat) : 
+                for element in lt.iterator(lista) :
+                    lt.addLast(latlist,element)
+            mer.sort(latlist,compareLatitude)
+            for element in lt.iterator(latlist) :
+                if round(float(element['Latitude']),1) >= round(min(latTuple),1)  and round(float(element['Latitude']),1) < round(max(latTuple),1):
+                    lt.addLast(airport,element)
+                    encontro = True
+                    return element
+        range += 10 
+
 
 
 
 
 def compareLatitude(elem1,elem2) : 
-    lat1 = elem1['lat']
-    lat2 = elem2['lat']
+    lat1 = elem1['Latitude']
+    lat2 = elem2['Latitude']
     return lat1 < lat2
 
 
 
-def findShortestRoute(analyzer,ciudad_1,ciudad_2): 
-    pass
+def findShortestRoute(analyzer,airport_1,airport_2):
+    search = djk.Dijkstra(analyzer['routes'],airport_1)
+    route = djk.pathTo(search,airport_2)
+    return route
+
+
+
+    
 
 

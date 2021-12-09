@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from DISClib.ADT.graph import adjacents, containsVertex, gr, vertices
 import config as cf
 import model
 import csv
@@ -60,7 +61,7 @@ def loadServices(analyzer):
         model.addAirporttoGraph(analyzer,airport)
         if i == 0:
             airport_inicial = airport 
-        if i == len(input_file2):
+        if i == gr.numVertices(analyzer['routes']) :
             airport_final = airport
     j = 0 
     print('Cargando rutas ...')

@@ -136,7 +136,7 @@ while True:
         print(f'Total de ciudades = {Num_5}')
         print("La primera y última ciudad cargada son: ")
         print("+" + "-"*10 +"+" + "-"*10 + "+" + "-"*10 + "+" + '-'*10 + '+' + "-"*10 + "+")
-        print("|" + 'Ciudad' + ' '*4 + "|" + 'País' + ' '*6 + "|" + 'Latitud' + ' '*3 + "|" + 'Longitud'+" "*2 +"|"+"Población" +' '*3 +"|")
+        print("| " + 'Ciudad' + ' '*3 + "| " + 'País' + ' '*5 + "| " + 'Latitud' + ' '*2 + "| " + 'Longitud'+" "*2 +"|"+"Población" +' ' +"|")
         print("+" + "-"*10 +"+" + "-"*10 + "+" + "-"*10 + "+" + '-'*10 + '+' + "-"*10 + "+")
         printCityInfo(Num_8)
         printCityInfo(Num_9)

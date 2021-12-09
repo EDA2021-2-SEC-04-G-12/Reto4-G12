@@ -142,7 +142,7 @@ while True:
         faltanExcedenKm = (distanciaKm - (float(millas)*1.60))
         print("La cantidad de nodos de la red de expansion minima es: " ,str(mp.size(mst['marked'])))
         print("La distancia total de la red de expansion minima es de: ",distanciaKm,"km")
-        print(mst["marked"])
+        print(mst)
         if faltanExcedenMillas < 0:
             print("Al viajero le faltan: " + str(faltanExcedenMillas) + " millas.")
             print("Al viajero le faltan: " + str(faltanExcedenKm) + " Km.")

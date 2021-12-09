@@ -74,6 +74,12 @@ def displayCities(city) :
     elemento = lt.getElement(citymap,int(seleccion))
     return elemento
     
+def printArbolExpansion(mst):
+    departure = mst['vertexA']
+    destination = mst['vertexB']
+    distance = mst['weight']
+    print(f"| {departure:31}| {destination:18}| {distance:22}|")
+    print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23)
 
 
     
@@ -145,8 +151,8 @@ while True:
         print(mst["mst"])
         i = 0
         while i < mp.size(mst["mst"]): 
-            elem = lt.getElement(mst["mst"],i)
-            printAirportInfo(elem)
+            elem = mp.get(mst["mst"],i)
+            printArbolExpansion(elem)
             i -= 1
         if faltanExcedenMillas < 0:
             print("Al viajero le faltan: " + str(faltanExcedenMillas) + " millas.")

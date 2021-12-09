@@ -183,8 +183,8 @@ while True:
             printArbolExpansion(elem)
             i += 1
         if faltanExcedenMillas < 0:
-            print("Al viajero le faltan: " + str(faltanExcedenMillas) + " millas.")
-            print("Al viajero le faltan: " + str(faltanExcedenKm) + " Km.")
+            print("Al viajero le faltan: " + str(faltanExcedenMillas).strip('-') + " millas.")
+            print("Al viajero le faltan: " + str(faltanExcedenKm).strip('-') + " Km.")
         elif faltanExcedenMillas > 0:
             print("Al viajero le sobran: " + str(faltanExcedenMillas) + " millas.")
             print("Al viajero le sobran: " + str(faltanExcedenKm) + " Km.")

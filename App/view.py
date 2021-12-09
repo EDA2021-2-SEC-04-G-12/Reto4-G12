@@ -127,7 +127,8 @@ while True:
         if clusters[0] : 
             print(f"Los aeropuertos {airport1} y {airport2} estan en un mismo cluster")
         else : 
-            print("Los aeropuertos no estan conectados")        
+            print("Los aeropuertos no estan conectados")      
+
     elif int(inputs[0]) == 5:
         ciudad_1  = input("Ingrese el nombre de la ciudad de partida: ")
         ciudad_pais1 = displayCities(ciudad_1) 
@@ -135,10 +136,8 @@ while True:
         ciudad_pais2 = displayCities(ciudad_2)
         aeropuerto1 = controller.findNearestAirport(analyzer,ciudad_pais1)
         aeropuerto1 = controller.findNearestAirport(analyzer,ciudad_pais2)
-
-
-
         ruta = controller.findShortestRoute(analyzer,ciudad_1,ciudad_2)
+
     elif int(inputs[0]) == 6:
         millas = input("Ingrese la cantidad de millas disponibles del viajero: ")
         mst = controller.mst(analyzer['routes'])
@@ -165,8 +164,10 @@ while True:
         else: 
             print("El viajero usó todas sus millas.")
             print("El viajero usó todas sus Km.")
+
     elif int(inputs[0]) == 7:
         pass
+    
     else:
         sys.exit(0)
 sys.exit(0)

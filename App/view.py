@@ -56,8 +56,8 @@ def printInfoAirport (airportInfo):
     country = airportInfo['Country']
     lat = airportInfo['Latitude'] 
     lng = airportInfo['Longitude']
-    print(f"| {codeIATA:7}| {name:49}| {city:18}| {country:22}| {lat:11}| {lng:11}|")
-    print("+" + '-'*8 + "+" + "-"*50 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
+    print(f"| {codeIATA:7}| {name:49}| {city:18}| {country:22}| {lat:14}| {lng:14}|")
+    print("+" + '-'*8 + "+" + "-"*50 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*15 + '+' + '-'*15 + '+')
 def printCityInfo (cityinfo):
     city = cityinfo['city']
     country = cityinfo['country']
@@ -140,17 +140,15 @@ while True:
         print("+" + '-'*8 + "+" + "-"*50 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
         printInfoAirport(Num_6)
         printInfoAirport(Num_7)
-        print('------------------------------------------------------------------------------------------------------------------------------------------')
         print('=== Grafo 2 ===')
         print(f'Total de aeropuertos = {Num_3}')
         print(f'Total de rutas aéreas = {Num_4}')
         print("El primer y último aeropuerto cargado son: ")
-        print("+" + '-'*8 + "+" + "-"*42 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
-        print("| " + 'IATA' + ' '*4 + "| " + 'Nombre' + ' '*20 + "| " + 'Ciudad' + ' '*3 + "| " + 'País' + ' '*5 + "| " + 'Latitud' + ' '*2 + "| " + 'Longitud'+ " " +"|"+"Población" +' ' +"|")
-        print("+" + '-'*8 + "+" + "-"*42 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*12 + '+' + '-'*12 + '+')
+        print("+" + '-'*8 + "+" + "-"*42 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*15 + '+' + '-'*15 + '+')
+        print("| " + 'IATA' + ' '*4 + "| " + 'Nombre' + ' '*35 + "| " + 'Ciudad' + ' '*3 + "| " + 'País' + ' '*5 + "| " + 'Latitud' + ' '*2 + "| " + 'Longitud'+ " " +"|"+"Población" +' ' +"|")
+        print("+" + '-'*8 + "+" + "-"*42 +"+" + "-"*19 + "+" + "-"*23 + "+" + "-"*15 + '+' + '-'*15 + '+')
         printInfoAirport(Num_6)
         printInfoAirport(Num_7)
-        print('------------------------------------------------------------------------------------------------------------------------------------------')
         print('=== Ciudades ===')
         print(f'Total de ciudades = {Num_5}')
         print("La primera y última ciudad cargada son: ")

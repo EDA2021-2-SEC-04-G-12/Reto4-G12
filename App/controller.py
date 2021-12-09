@@ -62,7 +62,7 @@ def loadServices(analyzer):
         model.addAirporttoGraph(analyzer,airport)
         if i == 1:
             airport_inicial = airport 
-        if i == m.size(analyzer['airports']):
+        if i == gr.numVertices(analyzer['routes']):
             airport_final = airport
     j = 0 
     print('Cargando rutas ...')
@@ -71,9 +71,16 @@ def loadServices(analyzer):
         j += 1 
     #routes_2 = model.addRoute_2(analyzer)
     routes_3 = model.addRoute_3(analyzer)
+    k = 1
+    airport_inicial_1 = None
+    airport_final_1 = None
     print('Cargando ciudades ...')
     for city in input_file3 : 
         model.addCity(analyzer,city)
+        if i == 1:
+            airport_inicial_1 = city 
+        if i == m.size(analyzer['city-country']):
+            airport_final_1 = city
     
     airports_1 = model.totalAirports(analyzer['routes'])
     routes_1 = model.totalRoutes(analyzer['routes'])
@@ -81,7 +88,7 @@ def loadServices(analyzer):
     routes_2 = model.totalRoutes(analyzer['routes_2'])
     cities = model.mapSize(analyzer['city-country'])
     
-    return analyzer,airports_1,routes_1,airports_2,routes_2,cities,airport_inicial, airport_final
+    return analyzer,airports_1,routes_1,airports_2,routes_2,cities,airport_inicial, airport_final,airport_inicial_1,airport_final_1
 
 # Funciones de ordenamiento
 

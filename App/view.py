@@ -111,6 +111,8 @@ while True:
         Num_5 = services[5]
         Num_6 = services[6]
         Num_7 = services[7]
+        Num_8 = services[8]
+        Num_9 = services[9]
         print('------------------------------------------------------------------------------------------------------------------------------------------')
         print('Grafo 1')
         print(f'Total de aeropuertos = {Num_1}')
@@ -124,6 +126,8 @@ while True:
         print('------------------------------------------------------------------------------------------------------------------------------------------')
         print('Ciudades')
         print(f'Total de ciudades = {Num_5}')
+        print(Num_8)
+        print(Num_9)
 
     elif int(inputs[0]) == 3:
         print("Calculando ... ")

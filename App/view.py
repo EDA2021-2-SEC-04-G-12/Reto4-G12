@@ -49,6 +49,14 @@ def printMenu():
 
 catalog = None
 
+def printCityInfo (cityinfo):
+    city = cityinfo['city']
+    country = cityinfo['country']
+    lat = cityinfo['lat']
+    lng = cityinfo['lng']
+    population = cityinfo['population'] 
+    print(f"| {city:31}| {country:18}| {lat:22}| {lng:7}| {population:14}|")
+    print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+")
 def printAirportInfo (airportinfo):
     """
     Impresion de datos requerimiento 1
@@ -111,8 +119,8 @@ while True:
         Num_5 = services[5]
         Num_6 = services[6]
         Num_7 = services[7]
-        Num_8 = services[8]
-        Num_9 = services[9]
+        Num_8 = services[9]
+        Num_9 = services[8]
         print('------------------------------------------------------------------------------------------------------------------------------------------')
         print('Grafo 1')
         print(f'Total de aeropuertos = {Num_1}')
@@ -126,6 +134,9 @@ while True:
         print('------------------------------------------------------------------------------------------------------------------------------------------')
         print('Ciudades')
         print(f'Total de ciudades = {Num_5}')
+        print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+")
+        print("|" + 'Ciudad' + ' '*27 + "|" + 'País' + ' '*14 + "|" + 'Latitud' + ' '*15 + "|" + 'Longitud'+" "*3 +"|"+"Población" +' ' +"|")
+        print("+" + "-"*32 +"+" + "-"*19 + "+" + "-"*23 + "+" + '-'*8 + '+' + "-"*15 + "+")
         print(Num_8)
         print(Num_9)
 

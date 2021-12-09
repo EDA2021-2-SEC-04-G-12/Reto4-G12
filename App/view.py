@@ -150,8 +150,8 @@ while True:
         print("La distancia total de la red de expansion minima es de: ",distanciaKm,"km")
         print(mst["mst"])
         i = 0
-        while i < mp.size(mst["mst"]): 
-            elem = mp.get(mst["mst"],i)
+        while i < lt.size(mst["mst"]): 
+            elem = lt.getElement(mst["mst"],i)
             printArbolExpansion(elem)
             i -= 1
         if faltanExcedenMillas < 0:

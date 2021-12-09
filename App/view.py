@@ -38,11 +38,12 @@ def printMenu():
     print("Bienvenido")
     print("1- Iniciar Analizador")
     print("2- Cargar información de los aeropuertos y rutas")
-    print("3- Encontrar puntos de interconexión aérea")
-    print("4- Encontrar clústeres de tráfico aéreo")
-    print("5- Encontrar la ruta más corta entre ciudades")
-    print("6- Utilizar las millas de viajero")
-    print("7- Cuantificar el efecto de un aeropuerto cerrado")
+    print("3- Requerimiento 1: Encontrar puntos de interconexión aérea")
+    print("4- Requerimiento 2: Encontrar clústeres de tráfico aéreo")
+    print("5- Requerimiento 3: Encontrar la ruta más corta entre ciudades")
+    print("6- Requerimiento 4: Utilizar las millas de viajero")
+    print("7- Requerimiento 5: Cuantificar el efecto de un aeropuerto cerrado")
+    print("8- Salir del programa")
 
 
 catalog = None
@@ -132,7 +133,8 @@ while True:
 
         ruta = controller.findShortestRoute(analyzer,ciudad_1,ciudad_2)
     elif int(inputs[0]) == 6:
-        pass
+        millas = input("Ingrese la cantidad de millas disponibles del viajero: ")
+        
     elif int(inputs[0]) == 7:
         pass
     else:

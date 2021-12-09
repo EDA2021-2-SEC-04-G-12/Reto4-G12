@@ -21,6 +21,7 @@
  """
 
 from DISClib.ADT.graph import adjacents, containsVertex, gr, vertices
+from DISClib.ADT import map as m
 import config as cf
 import model
 import csv
@@ -51,7 +52,7 @@ def loadServices(analyzer):
     citiesfile = cf.data_dir + "worldcities-utf8.csv"
     input_file3 = csv.DictReader(open(citiesfile, encoding="utf-8"),
                                 delimiter=",")
-    i = 0
+    i = 1
     airport_inicial = None
     airport_final = None
     print("Cargando aeropuertos ...")
@@ -59,9 +60,9 @@ def loadServices(analyzer):
         model.addAirportbyCode(analyzer,airport)
         model.addAirportbyLongitude(analyzer,airport)
         model.addAirporttoGraph(analyzer,airport)
-        if i == 0:
+        if i == 1:
             airport_inicial = airport 
-        if i == gr.numVertices(analyzer['routes']) :
+        if i == m.size(analyzer['airports']):
             airport_final = airport
     j = 0 
     print('Cargando rutas ...')
@@ -78,7 +79,7 @@ def loadServices(analyzer):
     routes_1 = model.totalRoutes(analyzer['routes'])
     airports_2 = model.totalAirports(analyzer['routes_2'])
     routes_2 = model.totalRoutes(analyzer['routes_2'])
-    cities = model.mapSize(analyzer['Cities'])
+    cities = model.mapSize(analyzer['city-country'])
     
     return analyzer,airports_1,routes_1,airports_2,routes_2,cities,airport_inicial, airport_final
 

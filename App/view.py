@@ -79,7 +79,7 @@ def printArbolExpansion(mst):
     destination = mst['vertexB']
     distance = mst['weight']
     print(f"| {departure:13}| {destination:13}| {distance:15}|")
-    print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16)
+    print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16 + "+")
 
 
     
@@ -148,9 +148,9 @@ while True:
         faltanExcedenKm = (distanciaKm - (float(millas)*1.60))
         print("La cantidad de nodos de la red de expansion minima es: " ,str(mp.size(mst['mst'])))
         print("La distancia total de la red de expansion minima es de: ",distanciaKm,"km")
-        print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16)
+        print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16 + "+")
         print("|" + " Departure" + " "*4 + "|" + " Destination" + " "*2 + "|" + " Distance" + " "*7 + "|")
-        print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16)
+        print("+" + "-"*14 +"+" + "-"*14 + "+" + "-"*16 + "+")
         i = 0
         while i < lt.size(mst["mst"]): 
             elem = lt.getElement(mst["mst"],i)

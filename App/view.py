@@ -143,6 +143,11 @@ while True:
         print("La cantidad de nodos de la red de expansion minima es: " ,str(mp.size(mst['mst'])))
         print("La distancia total de la red de expansion minima es de: ",distanciaKm,"km")
         print(mst["mst"])
+        i = 0
+        while i < mp.size(mst["mst"]): 
+            elem = lt.getElement(mst["mst"],i)
+            printAirportInfo(elem)
+            i -= 1
         if faltanExcedenMillas < 0:
             print("Al viajero le faltan: " + str(faltanExcedenMillas) + " millas.")
             print("Al viajero le faltan: " + str(faltanExcedenKm) + " Km.")

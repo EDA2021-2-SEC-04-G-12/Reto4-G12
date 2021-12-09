@@ -166,8 +166,14 @@ while True:
             print("El viajero usó todas sus Km.")
 
     elif int(inputs[0]) == 7:
-        pass
-    
+        codigoIATA=input("Ingrese el código IATA del aeropuerto fuera de funcionamiento: ")
+        listAirports = controller.nearAirports(analyzer,codigoIATA)
+        afected = controller.afected(analyzer,listAirports)
+        print("La cantidad de paises afectados es: ",lt.size(afected))
+        print("La lista de paises afectados es la siguiente: ")
+        for city in lt.iterator(afected):
+            print(city['IATA'] + city['Name'])
+
     else:
         sys.exit(0)
 sys.exit(0)

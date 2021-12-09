@@ -64,6 +64,7 @@ def newAnalyzer():
                                               size=14000,
                                               comparefunction=compareRoutes)
         analyzer['airportsLongitudes'] = om.newMap(omaptype='RBT',comparefunction=compareLongitudes)
+        analyzer['near_IATA']=mp.newMap(numelements=1500,maptype='PROBING')
         analyzer['airportRoutes'] = m.newMap(numelements=10000,
                                     maptype='PROBING',
                                     comparefunction=compareAirports)
@@ -260,6 +261,24 @@ def addRoute_2(analyzer):
         return analyzer,numVertices,numArcos
     except Exception as exp:
         error.reraise(exp, 'model:addStopConnection')
+
+def addAirportConnection(analyzer):
+    airports = mp.keySet(analyzer["near_IATA"])
+    for airport in lt.iterator(airports):
+        aeropuertos=mp.get(analyzer["near_IATA"],airport)
+        nameAirport=me.getValue(aeropuertos)
+        previousAirport = None
+        for airport_2 in lt.iterator(nameAirport):
+            if previousAirport!=None:
+                origin= airport_2
+                destination= previousAirport
+                addConnection(analyzer["routes"],origin,destination,0.1)
+                
+            previousAirport=airport_2
+        airport_2 = lt.firstElement(nameAirport)
+        origin=airport_2
+        destination=previousAirport
+        addConnection(analyzer["routes"],origin,destination,0.1)
     
 def addAirport(analyzer,ID):
     try:
@@ -509,3 +528,29 @@ def mst(grafo):
 
 def distancia(grafo,mst):
     return prim.weightMST(grafo,mst)
+
+# REQUERIMIENTO 5
+
+def nearAirports(analyzer,codeIATA):
+    airportsMap = analyzer['near_IATA']
+    couple = mp.get(airportsMap,codeIATA)
+    return me.getValue(couple)
+
+def afected(analyzer,listAirports):
+    airportsList = lt.newList(datastructure='ARRAY_LIST')
+    for airport in lt.iterator(listAirports):
+        adjacents = gr.adjacents(analyzer['routes'],airport)
+        for adj_vertex in lt.iterator(adjacents):
+            conection = adj_vertex.split('-')[0]
+            couple = mp.get(analyzer['near_IATA'],conection)
+            if couple is not None:
+                value = me.getValue(couple)
+                city = value['City']
+                cities = mp.get(analyzer['Cities'],city)['value']
+                codeIATA = cities['IATA']
+                name = cities['Name']
+                city_2 = cities['City']
+                country = cities['Country']
+                if not lt.isPresent(airportsList,cities):
+                    lt.addLast(airportsList,cities)
+    return airportsList

@@ -96,3 +96,9 @@ def findClusters(analyzer,airport1,airport2):
 
 def findShortestRoute(analyzer,ciudad_1,ciudad_2) : 
     esoSi = model.findShortestRoute(analyzer,ciudad_1,ciudad_2)
+
+def mst(grafo):
+    return model.mst(grafo)
+
+def distancia(grafo,mst):
+    return model.distancia(grafo,mst)
